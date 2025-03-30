@@ -1,6 +1,7 @@
 # Example file showing a circle moving on screen
 import pygame
 from random import uniform, randint, choice
+from time import sleep
 
 # pygame setup
 pygame.init()
@@ -76,7 +77,17 @@ while running:
         bull[1] -= bullet_speed
         if bull[1] > 0:
             new_bullet.append(bull)
-        bullet_list = new_bullet
+    bullet_list = new_bullet
+
+    for enemy in enemies_list:
+        if player_pos.x < enemy[0] + 50 and player_pos.x + 50 > enemy[0] and player_pos.y < enemy[1] and player_pos.y + 50 > enemy[1]:
+            print('Зіткнення з ворогом')
+            end_game_text = font.render('Зіткнення з ворогом', True, (255, 255, 255))
+            screen.blit(end_game_text, (350, 300))
+            pygame.display.update()
+            sleep(5)
+            running = False
+
 
     for bull in bullet_list:
         for enemy in enemies_list:
@@ -88,10 +99,20 @@ while running:
 
 
 
+
     if score >= 10:
+        finish_text = font.render('It is Victory', True, (255, 255, 255))
+        screen.blit(finish_text, (350, 300))
+        pygame.display.update()
+        sleep(5)
         print("Перемога")
+
         running = False
     if missed >= 3:
+        TheEnd_text = font.render('It is End', True, (255, 255, 255))
+        screen.blit(TheEnd_text, (350, 300))
+        pygame.display.update()
+        sleep(5)
         print("Програш")
         running = False
 
